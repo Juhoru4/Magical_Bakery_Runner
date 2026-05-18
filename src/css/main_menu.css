@@ -1,0 +1,27 @@
+
+.containerMainMenu {
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.boxMainMenu {
+    width:400px;
+    height:300px;
+    background:hotpink;
+}
+
+.mainMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: white;
+    gap: 20px;
+}
+
+.mainMenu a {
+    padding: 10px 30px;
+}

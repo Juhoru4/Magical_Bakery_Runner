@@ -120,8 +120,11 @@ return PCSS( shadowMap, shadowCoord );
 
 class BasicWorldDemo {
   constructor() {
-    this._Initialize();
     this.paused_ = false;
+    this.gameOverTriggered_ = false;
+    this.lives_ = 3;
+
+    this._Initialize();
 
     window.addEventListener('pause-state', (event) => {
       this.paused_ = Boolean(event.detail && event.detail.paused);
@@ -240,6 +243,24 @@ class BasicWorldDemo {
     this.RAF_();
     this.OnWindowResize_();
     this._FocusGame_();
+    this._UpdateLivesUI_();
+  }
+
+  _UpdateLivesUI_() {
+    const livesElement = document.getElementById('lives-text');
+    if (livesElement) {
+      const lives = Number.isFinite(this.lives_) ? this.lives_ : 0;
+      livesElement.innerText = lives.toString();
+    }
+  }
+
+  _TriggerGameOver_() {
+    if (this.gameOverTriggered_) {
+      return;
+    }
+
+    this.gameOverTriggered_ = true;
+    window.dispatchEvent(new CustomEvent('game-over-state', { detail: { gameOver: true } }));
   }
 
   OnWindowResize_() {
@@ -263,16 +284,22 @@ class BasicWorldDemo {
   }
 
   Step_(timeElapsed) {
-    if (this.gameOver_ || this.paused_) {
+    if (this.gameOverTriggered_ || this.paused_) {
       return;
     }
 
     this.player_.Update(timeElapsed);
     this.world_.Update(timeElapsed);
 
-    if (this.player_.gameOver && !this.gameOver_) {
-      this.gameOver_ = true;
-      window.dispatchEvent(new CustomEvent('game-over-state', { detail: { gameOver: true } }));
+    if (this.player_.hit_) {
+      this.player_.hit_ = false;
+      const currentLives = Number.isFinite(this.lives_) ? this.lives_ : 3;
+      this.lives_ = Math.max(0, currentLives - 1);
+      this._UpdateLivesUI_();
+
+      if (this.lives_ === 0) {
+        this._TriggerGameOver_();
+      }
     }
   }
 }

@@ -10,6 +10,8 @@ export const player = (() => {
     constructor(params) {
       this.position_ = new THREE.Vector3(0, 0, 0);
       this.velocity_ = 0.0;
+      this.hit_ = false;
+      this.invulnerableTime_ = 0.0;
 
       // this.mesh_ = new THREE.Mesh(
       //     new THREE.BoxBufferGeometry(1, 1, 1),
@@ -93,6 +95,10 @@ export const player = (() => {
     }
 
     CheckCollisions_() {
+      if (this.invulnerableTime_ > 0.0) {
+        return;
+      }
+
       const colliders = this.params_.world.GetColliders();
 
       this.playerBox_.setFromObject(this.mesh_);
@@ -101,12 +107,18 @@ export const player = (() => {
         const cur = c.collider;
 
         if (cur.intersectsBox(this.playerBox_)) {
-          this.gameOver = true;
+          this.hit_ = true;
+          this.invulnerableTime_ = 0.9;
+          break;
         }
       }
     }
 
     Update(timeElapsed) {
+      if (this.invulnerableTime_ > 0.0) {
+        this.invulnerableTime_ = Math.max(0.0, this.invulnerableTime_ - timeElapsed);
+      }
+
       if (this.keys_.space && this.position_.y == 0.0) {
         this.velocity_ = 30;
       }

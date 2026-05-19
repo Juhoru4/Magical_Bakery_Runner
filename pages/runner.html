@@ -39,8 +39,20 @@
       </div>
     </div>
 
+    <div id="game-over-modal" class="pause-modal" hidden>
+      <div class="pause-modal__backdrop"></div>
+      <div class="pause-modal__panel">
+        <iframe
+          id="game-over-frame"
+          src="runner_game-over.html"
+          title="Game Over"
+        ></iframe>
+      </div>
+    </div>
+
     <script src="../src/js/runner/main.js" type="module"></script>
     <script src="../src/js/runner_pausa.js" type="module"></script>
+    <script src="../src/js/runner_game-over.js" type="module"></script>
 
     <div class="container" id="container">
 
@@ -49,12 +61,6 @@
           <div class="score-text" id="score-text">
             00000
           </div>
-        </div>
-      </div>
-
-      <div class="ui">
-        <div class="game-over-layout" id="game-over">
-          <div class="game-over-text">GAME OVER</div>
         </div>
       </div>
 

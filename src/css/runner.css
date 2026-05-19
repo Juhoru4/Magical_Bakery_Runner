@@ -26,32 +26,6 @@ body {
   font-family: 'Press Start 2P', cursive;
 }
 
-.game-over-layout {
-  opacity: 0.0;
-
-  visibility: hidden;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.game-over-layout.active {
-  opacity: 1.0;
-  visibility: visible;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.game-over-text {
-  font-size: 5em;
-  color: white;
-  text-shadow: 8px 8px black;
-}
-
 .score-text {
   font-size: 3em;
   color: white;
@@ -88,6 +62,11 @@ body {
 }
 
 .pause-body {
+  background: #ffffff;
+  position: static;
+}
+
+.game-over-body {
   background: #ffffff;
   position: static;
 }
@@ -142,4 +121,30 @@ body {
   padding: 10px 14px;
   cursor: pointer;
   margin-bottom: 16px;
+}
+
+.game-over-page {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 24px;
+  background: #ffffff;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.game-over-page h2 {
+  margin: 0 0 12px;
+  font-size: 2.2rem;
+  color: #111;
+}
+
+.game-over-page p {
+  margin: 0;
+  color: #444;
 }

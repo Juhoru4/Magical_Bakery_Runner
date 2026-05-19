@@ -272,7 +272,7 @@ class BasicWorldDemo {
 
     if (this.player_.gameOver && !this.gameOver_) {
       this.gameOver_ = true;
-      document.getElementById('game-over').classList.toggle('active');
+      window.dispatchEvent(new CustomEvent('game-over-state', { detail: { gameOver: true } }));
     }
   }
 }

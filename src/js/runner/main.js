@@ -121,7 +121,22 @@ return PCSS( shadowMap, shadowCoord );
 class BasicWorldDemo {
   constructor() {
     this._Initialize();
+    this.paused_ = false;
 
+    window.addEventListener('pause-state', (event) => {
+      this.paused_ = Boolean(event.detail && event.detail.paused);
+
+      if (!this.paused_) {
+        requestAnimationFrame(() => this._FocusGame_());
+      }
+    });
+
+  }
+
+  _FocusGame_() {
+    if (document.body) {
+      document.body.focus();
+    }
   }
 
   _Initialize() {
@@ -155,6 +170,7 @@ class BasicWorldDemo {
     this.threejs_.setSize(window.innerWidth, window.innerHeight);
 
     document.getElementById('container').appendChild(this.threejs_.domElement);
+    document.body.tabIndex = -1;
 
     window.addEventListener('resize', () => {
       this.OnWindowResize_();
@@ -223,6 +239,7 @@ class BasicWorldDemo {
     this.previousRAF_ = null;
     this.RAF_();
     this.OnWindowResize_();
+    this._FocusGame_();
   }
 
   OnWindowResize_() {
@@ -246,7 +263,7 @@ class BasicWorldDemo {
   }
 
   Step_(timeElapsed) {
-    if (this.gameOver_) {
+    if (this.gameOver_ || this.paused_) {
       return;
     }
 

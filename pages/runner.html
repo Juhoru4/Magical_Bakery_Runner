@@ -24,7 +24,23 @@
 
   <div class="runner">
 
+    <button id="pausar">
+      +++
+    </button>
+
+    <div id="pause-modal" class="pause-modal" hidden>
+      <div class="pause-modal__backdrop" data-pause-close></div>
+      <div class="pause-modal__panel">
+        <iframe
+          id="pause-frame"
+          src="runner_pausa.html"
+          title="Pausa"
+        ></iframe>
+      </div>
+    </div>
+
     <script src="../src/js/runner/main.js" type="module"></script>
+    <script src="../src/js/runner_pausa.js" type="module"></script>
 
     <div class="container" id="container">
 

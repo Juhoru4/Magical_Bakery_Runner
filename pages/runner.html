@@ -7,15 +7,44 @@
     <title>Menu Principal</title>
     <link rel="icon" type="image/png" href="./src/img/game_icon.png">
 
-    <link rel="stylesheet" href="./src/css/style.css">
-    <link rel="stylesheet" href="./src/css/runner.css">
+    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/runner.css">
+
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.183.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.0/examples/jsm/"
+      }
+    }
+    </script>
 
 </head>
 <body>
 
-    <div class="containerMainMenu">
-        
+  <div class="runner">
+
+    <script src="../src/js/runner/main.js" type="module"></script>
+
+    <div class="container" id="container">
+
+      <div class="ui">
+        <div class="score-layout">
+          <div class="score-text" id="score-text">
+            00000
+          </div>
+        </div>
+      </div>
+
+      <div class="ui">
+        <div class="game-over-layout" id="game-over">
+          <div class="game-over-text">GAME OVER</div>
+        </div>
+      </div>
+
     </div>
+
+  </div>
     
 </body>
 </html>

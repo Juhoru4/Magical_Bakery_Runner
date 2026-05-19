@@ -33,13 +33,13 @@ export const player = (() => {
 
     LoadModel_() {
       const mtlLoader = new MTLLoader();
-      mtlLoader.setPath('../src/models/characters/');
+      mtlLoader.setPath('../src/models/characters/char1/');
       mtlLoader.load('Velociraptor.mtl', (materials) => {
         materials.preload();
 
         const loader = new OBJLoader();
         loader.setMaterials(materials);
-        loader.setPath('../src/models/characters/');
+        loader.setPath('../src/models/characters/char1/');
         loader.load('Velociraptor.obj', (obj) => {
           obj.scale.setScalar(0.3);
           obj.quaternion.setFromAxisAngle(

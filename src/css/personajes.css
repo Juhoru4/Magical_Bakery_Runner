@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body{
+  margin:0;
+  padding:2em 0 10em;
+  background:#f4f7ff;
+  font-family:'Roboto', sans-serif;
+  color:white;
+}
+
+.cards{
+  width:100vw;
+  min-height:70vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:5em;
+}
+
+.card{
+  position:relative;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+.card:hover .card__character{
+  transform:scale(1.1);
+}
+
+.card__character{
+  position:absolute;
+  top:-7em;
+  left:2em;
+
+  z-index:10;
+
+  transition:0.2s;
+
+  filter:drop-shadow(
+    0px 17px 22px rgba(0,0,0,0.10)
+  );
+}
+
+.card__character img{
+  height:300px;
+}
+
+.card__shape{
+  width:257px;
+  height:131px;
+
+  transform:skewY(-19deg) scale(1.15);
+
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+}
+
+.card__detail{
+  width:248px;
+
+  position:absolute;
+  top:81px;
+
+  padding:1.5em;
+
+  border-bottom-left-radius:25px;
+  border-bottom-right-radius:25px;
+}
+
+.card__detail h1{
+  margin-top:2.5em;
+  margin-bottom:0;
+
+  font-family:'Bangers', cursive;
+  letter-spacing:1px;
+}
+
+.card__detail__rate{
+  display:flex;
+  align-items:center;
+
+  gap:15px;
+}
+
+.card__detail__rate img{
+  width:90px;
+  height:13px;
+}
+
+.card__detail__rate p{
+  font-size:12px;
+}
+
+.card__detail__statistics{
+  margin-top:1.5em;
+
+  display:flex;
+
+  gap:10px;
+}
+
+.card__detail__statistics-bag{
+  display:flex;
+  align-items:flex-end;
+
+  padding:5px;
+
+  border:1px solid #ffffff63;
+
+  border-radius:4px;
+}
+
+.card__detail__statistics-bag span{
+  margin-right:10px;
+}
+
+.card__detail__statistics-bag label{
+  font-size:10px;
+}
+
+.card__detail__statistics-bag p{
+  margin:0;
+  font-size:13px;
+}
+
+.card__detail__statistics-bag img{
+  width:25px;
+  height:25px;
+}
+
+.card__logo{
+  position:absolute;
+
+  right:0;
+  bottom:6em;
+
+  opacity:0.2;
+}
+
+.card__logo img{
+  width:150px;
+
+  filter:brightness(0) invert(1);
+}

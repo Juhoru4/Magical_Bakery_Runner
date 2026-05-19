@@ -260,7 +260,12 @@ class BasicWorldDemo {
     }
 
     this.gameOverTriggered_ = true;
-    window.dispatchEvent(new CustomEvent('game-over-state', { detail: { gameOver: true } }));
+    window.dispatchEvent(new CustomEvent('game-over-state', {
+      detail: {
+        gameOver: true,
+        scoreText: this.world_.GetScoreText(),
+      }
+    }));
   }
 
   OnWindowResize_() {

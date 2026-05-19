@@ -104,6 +104,11 @@ export const world = (() => {
       return this.objects_;
     }
 
+    GetScoreText() {
+      return Math.round(this.score_).toLocaleString(
+          'en-US', {minimumIntegerDigits: 5, useGrouping: false});
+    }
+
     LastObjectPosition_() {
       if (this.objects_.length == 0) {
         return SEPARATION_DISTANCE;
@@ -159,8 +164,7 @@ export const world = (() => {
     UpdateScore_(timeElapsed) {
       this.score_ += timeElapsed * 10.0;
 
-      const scoreText = Math.round(this.score_).toLocaleString(
-          'en-US', {minimumIntegerDigits: 5, useGrouping: false});
+      const scoreText = this.GetScoreText();
 
       if (scoreText == this.scoreText_) {
         return;

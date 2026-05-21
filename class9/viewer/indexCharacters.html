@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry</title>
+    <link rel="icon" type="image/png" href="../../../src/img/computer_icon.png">
+
+    <!-- Import the component -->
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
+
+    <!--Import Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="../src/css/main.css">
+
+    <!--ImportThreejs-->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.183.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.0/examples/jsm/"
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <!--
+    navbar
+    -->
+    <section id="navbar">
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+
+                    <!--Icono y texto a la izquierda-->
+                    <a class="navbar-brand" href="/index.html">
+                        <img src="../../../src/img/computer_icon.png" alt="Logo" width="24" height="24" class="d-inline-block align-text-top">
+                        Computer Graphics
+                    </a>
+
+                    <!--Boton responsive de bootstrap-->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+            </div>
+        </nav>
+    </section>
+
+
+    <section class="chooseCharacter">
+
+        <div class="name">Characters</div>
+
+        <!-- Use it like any other HTML element -->
+        <model-viewer 
+            alt="Scene 3d"
+            src="../src/models/glb/player.glb"
+            ar shadow-intensity="1" 
+            camera-controls
+            touch-action="pan-y">
+            
+            <div class="slider">
+                <div class="slides">
+
+                    <button class="slide" onclick="switchSrc(this, 'player')" 
+                        style="background-image: url('../src/img/girlImage.png');">
+                    </button>
+                    
+                </div>
+            </div>
+
+        </model-viewer>
+
+        <script type="module">
+            const modelViewer = document.querySelector("model-viewer");
+
+            window.switchSrc = (element, name) => {
+                const base = "./src/models/glb/" + name;
+                modelViewer.src = base + '.glb';
+                const slides = document.querySelectorAll(".slide");
+                slides.forEach((element) => { element.classList.remove("selected"); });
+                element.classList.add("selected");
+            };
+
+            document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+                // Keep slider interactions from affecting the XR scene.
+                ev.preventDefault();
+            });
+        </script>
+
+    </section
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

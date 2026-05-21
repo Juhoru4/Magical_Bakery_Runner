@@ -32,19 +32,46 @@ export const player = (() => {
     }
 
     LoadModel_() {
+      const characterOptions = {
+        char1: {
+          modelPath: '../src/models/characters/char1/Velociraptor.obj',
+          mtlPath: '../src/models/characters/char1/Velociraptor.mtl',
+          scale: 0.3,
+          rotationY: Math.PI / 2,
+          lift: 0.1,
+        },
+        char2: {
+          modelPath: '../src/models/characters/char2/Apatosaurus.obj',
+          mtlPath: '../src/models/characters/char2/Apatosaurus.mtl',
+          scale: 0.22,
+          rotationY: Math.PI / 2,
+          lift: 0.0,
+        },
+        char3: {
+          modelPath: '../src/models/characters/char3/Parasaurolophus.obj',
+          mtlPath: '../src/models/characters/char3/Parasaurolophus.mtl',
+          scale: 0.24,
+          rotationY: Math.PI / 2,
+          lift: 0.0,
+        },
+      };
+
+      const selectedId = localStorage.getItem('selectedCharacterId') || 'char1';
+      const config = characterOptions[selectedId] || characterOptions.char1;
+      const loaderPath = config.mtlPath.replace(/[^/]+$/, '');
+
       const mtlLoader = new MTLLoader();
-      mtlLoader.setPath('../src/models/characters/char1/');
-      mtlLoader.load('Velociraptor.mtl', (materials) => {
+      mtlLoader.setPath(loaderPath);
+      mtlLoader.load(config.mtlPath.split('/').pop(), (materials) => {
         materials.preload();
 
         const loader = new OBJLoader();
         loader.setMaterials(materials);
-        loader.setPath('../src/models/characters/char1/');
-        loader.load('Velociraptor.obj', (obj) => {
-          obj.scale.setScalar(0.3);
-          obj.quaternion.setFromAxisAngle(
-              new THREE.Vector3(0, 1, 0), Math.PI / 2);
-          obj.position.y = 0.1;
+        loader.setPath(loaderPath);
+        loader.load(config.modelPath.split('/').pop(), (obj) => {
+          obj.scale.setScalar(config.scale);
+          obj.rotation.y = config.rotationY;
+          obj.position.y = config.lift;
 
           this.mesh_ = obj;
           this.params_.scene.add(this.mesh_);

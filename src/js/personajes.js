@@ -1,99 +1,229 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.module.js';
+import { MTLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.124/examples/jsm/loaders/MTLLoader.js';
+import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.124/examples/jsm/loaders/OBJLoader.js';
+
 const characters = [
 
   {
+    id: "char1",
     name: "Laby",
     color: "#f17c9b",
-    width: "200px",
-    image: "https://elwiki.net/wiki/images/thumb/1/16/Portrait_-_Shining_Romantica.png/340px-Portrait_-_Shining_Romantica.png"
+    modelPath: "../src/models/characters/char1/Velociraptor.obj",
+    mtlPath: "../src/models/characters/char1/Velociraptor.mtl",
+    scale: 0.32,
+    rotationY: Math.PI / 2,
+    spinSpeed: 0.7,
+    lift: 0.1,
   },
 
   {
+    id: "char2",
     name: "Rose",
     color: "#ffca53",
-    width: "270px",
-    image: "https://pa1.narvii.com/6613/aefc759c1a23efe8c95713fdaa601b98347d62fc_hq.gif"
+    modelPath: "../src/models/characters/char2/Apatosaurus.obj",
+    mtlPath: "../src/models/characters/char2/Apatosaurus.mtl",
+    scale: 0.22,
+    rotationY: Math.PI / 2,
+    spinSpeed: 0.7,
+    lift: 0.0,
   },
 
   {
+    id: "char3",
     name: "Aisha",
     color: "#9400d3",
-    width: "250px",
-    image: "https://i.pinimg.com/originals/ae/ee/f8/aeeef8e3d506ccaa77dd418d719dc330.png"
+    modelPath: "../src/models/characters/char3/Parasaurolophus.obj",
+    mtlPath: "../src/models/characters/char3/Parasaurolophus.mtl",
+    scale: 0.24,
+    rotationY: Math.PI / 2,
+    spinSpeed: 0.7,
+    lift: 0.0,
   }
 
 ];
 
 const cardsContainer = document.getElementById("cards");
 
-characters.forEach(character => {
+cardsContainer.innerHTML = characters.map((character, index) => `
+  <div class="card" style="--card-accent:${character.color}" data-character-id="${character.id}">
+    <div class="card__character">
+      <div class="card__viewer" data-character-index="${index}"></div>
+    </div>
 
-  cardsContainer.innerHTML += `
+    <div
+      class="card__shape"
+      style="background:${character.color}"
+    ></div>
 
-    <div class="card">
+    <div
+      class="card__detail"
+      style="background:${character.color}"
+    >
 
-      <div class="card__character">
-        <img
-          src="${character.image}"
-          style="width:${character.width}"
-        >
-      </div>
+      <h1>${character.name}</h1>
 
-      <div
-        class="card__shape"
-        style="background:${character.color}"
-      ></div>
-
-      <div
-        class="card__detail"
-        style="background:${character.color}"
-      >
-
-        <h1>${character.name}</h1>
-
-        <div class="card__detail__rate">
-
-          <img src="https://i.imgur.com/OoOIyfX.png">
-
-          <p>824 People score</p>
-
-        </div>
-
-        <div class="card__detail__statistics">
-
-          <div class="card__detail__statistics-bag">
-
-            <span>
-              <label>Type</label>
-              <p>Physical</p>
-            </span>
-
-            <img src="https://i.imgur.com/f8cvB9m.png">
-
-          </div>
-
-          <div class="card__detail__statistics-bag">
-
-            <span>
-              <label>Speed</label>
-              <p>Average</p>
-            </span>
-
-            <img src="https://i.imgur.com/93x3Mri.png">
-
-          </div>
-
-        </div>
-
-        <div class="card__logo">
-
-          <img src="https://static.wixstatic.com/media/71b9db_149c0db80b7d4643ab931f36710fd998~mv2.png/v1/fill/w_477,h_327,al_c,q_85,usm_0.66_1.00_0.01/71b9db_149c0db80b7d4643ab931f36710fd998~mv2.webp">
-
-        </div>
-
-      </div>
 
     </div>
 
-  `;
+  </div>
+`).join("");
 
+const selectedCharacterId = localStorage.getItem("selectedCharacterId") || characters[0].id;
+const cardElements = [...document.querySelectorAll(".card")];
+
+cardElements.forEach((card) => {
+  if (card.dataset.characterId === selectedCharacterId) {
+    card.classList.add("card--selected");
+  }
+
+  card.addEventListener("click", () => {
+    const newId = card.dataset.characterId;
+    if (!newId) {
+      return;
+    }
+
+    localStorage.setItem("selectedCharacterId", newId);
+    cardElements.forEach((element) => element.classList.remove("card--selected"));
+    card.classList.add("card--selected");
+  });
 });
+
+const viewerElements = [...document.querySelectorAll(".card__viewer")];
+const viewers = [];
+
+characters.forEach((character, index) => {
+  const container = viewerElements[index];
+  if (!container) {
+    return;
+  }
+
+  viewers.push(createCharacterViewer(container, character));
+});
+
+const resizeViewers = () => {
+  for (const viewer of viewers) {
+    viewer.resize();
+  }
+};
+
+window.addEventListener("resize", resizeViewers);
+resizeViewers();
+
+function createCharacterViewer(container, character) {
+  const scene = new THREE.Scene();
+  scene.background = null;
+  let modelRoot = null;
+
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+  camera.position.set(0, 0.9, 2.8);
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+  });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  container.appendChild(renderer.domElement);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+  scene.add(ambientLight);
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  keyLight.position.set(2, 4, 3);
+  scene.add(keyLight);
+
+  const fillLight = new THREE.DirectionalLight(0xffe2f0, 0.8);
+  fillLight.position.set(-2, 1, 2);
+  scene.add(fillLight);
+
+  const ground = new THREE.Mesh(
+      new THREE.CircleGeometry(1.25, 32),
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color(character.color),
+        transparent: true,
+        opacity: 0.18,
+        roughness: 1,
+        metalness: 0,
+      }),
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.95;
+  scene.add(ground);
+
+  const loaderPath = character.mtlPath.replace(/[^/]+$/, "");
+  const mtlLoader = new MTLLoader();
+  mtlLoader.setPath(loaderPath);
+  mtlLoader.load(character.mtlPath.split("/").pop(), (materials) => {
+    materials.preload();
+
+    const objLoader = new OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath(loaderPath);
+    objLoader.load(character.modelPath.split("/").pop(), (obj) => {
+      modelRoot = obj;
+      obj.rotation.y = character.rotationY;
+      obj.scale.setScalar(character.scale);
+      obj.position.y = character.lift;
+
+      obj.traverse((child) => {
+        if (child.material && child.material.specular) {
+          child.material.specular = new THREE.Color(0x000000);
+        }
+
+        if (child.material && child.material.color) {
+          child.material.color.offsetHSL(0, 0, 0.08);
+        }
+
+        child.castShadow = true;
+        child.receiveShadow = true;
+      });
+
+      obj.updateWorldMatrix(true, true);
+      const bounds = new THREE.Box3().setFromObject(obj);
+      const center = bounds.getCenter(new THREE.Vector3());
+      const size = bounds.getSize(new THREE.Vector3());
+      const maxDimension = Math.max(size.x, size.y, size.z) || 1;
+
+      obj.position.x -= center.x;
+      obj.position.y -= center.y;
+      obj.position.z -= center.z;
+      obj.position.y += character.lift;
+
+      camera.position.set(0, maxDimension * 0.45, maxDimension * 2.2);
+      camera.lookAt(0, 0, 0);
+
+      scene.add(obj);
+    });
+  });
+
+  const resize = () => {
+    const { width, height } = container.getBoundingClientRect();
+    if (width === 0 || height === 0) {
+      return;
+    }
+
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  };
+
+  const clock = new THREE.Clock();
+  const render = () => {
+    const elapsed = clock.getElapsedTime();
+    if (modelRoot) {
+      modelRoot.rotation.y = character.rotationY + (elapsed * character.spinSpeed);
+    }
+    scene.rotation.y = Math.sin(elapsed * 0.35) * 0.08;
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+  };
+
+  resize();
+  render();
+
+  return {
+    resize,
+  };
+}

@@ -12,6 +12,8 @@ export const player = (() => {
       this.velocity_ = 0.0;
       this.hit_ = false;
       this.invulnerableTime_ = 0.0;
+      this.jumpAudio_ = new Audio('../src/sounds/salto.mp3');
+      this.jumpAudio_.preload = 'auto';
 
       // this.mesh_ = new THREE.Mesh(
       //     new THREE.BoxBufferGeometry(1, 1, 1),
@@ -29,6 +31,29 @@ export const player = (() => {
 
       this.LoadModel_();
       this.InitInput_();
+    }
+
+    PlayJumpSound_() {
+      const getStoredVolume = (key, fallback) => {
+        const stored = localStorage.getItem(key);
+        if (stored !== null) {
+          return Number(stored);
+        }
+
+        const legacy = localStorage.getItem('volumenAudio');
+        if (legacy !== null) {
+          return Number(legacy);
+        }
+
+        return fallback;
+      };
+
+      const volumenGeneral = getStoredVolume('volumenGeneral', 0.5);
+      const volumenEfectos = getStoredVolume('volumenEfectos', 0.5);
+
+      this.jumpAudio_.volume = volumenGeneral * volumenEfectos;
+      this.jumpAudio_.currentTime = 0;
+      this.jumpAudio_.play().catch(() => {});
     }
 
     LoadModel_() {
@@ -148,6 +173,7 @@ export const player = (() => {
 
       if (this.keys_.space && this.position_.y == 0.0) {
         this.velocity_ = 30;
+        this.PlayJumpSound_();
       }
 
       const acceleration = -75 * timeElapsed;

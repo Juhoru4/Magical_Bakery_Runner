@@ -3,8 +3,23 @@ window.addEventListener("load", () => {
 
     if (audios.length === 0) return;
 
-    const volumenGuardado = localStorage.getItem("volumenAudio");
-    const volumen = volumenGuardado !== null ? Number(volumenGuardado) : 0.5;
+    const getStoredVolume = (key, fallback) => {
+        const stored = localStorage.getItem(key);
+        if (stored !== null) {
+            return Number(stored);
+        }
+
+        const legacy = localStorage.getItem("volumenAudio");
+        if (legacy !== null) {
+            return Number(legacy);
+        }
+
+        return fallback;
+    };
+
+    const volumenGeneral = getStoredVolume("volumenGeneral", 0.5);
+    const volumenMusica = getStoredVolume("volumenMusica", 0.5);
+    const volumen = volumenGeneral * volumenMusica;
 
     audios.forEach((audio) => {
         audio.volume = volumen;

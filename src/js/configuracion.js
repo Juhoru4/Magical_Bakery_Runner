@@ -1,13 +1,27 @@
+const getStoredVolume = (key, fallback) => {
+	const stored = localStorage.getItem(key);
+	if (stored !== null) {
+		return Number(stored);
+	}
+
+	const legacy = localStorage.getItem("volumenAudio");
+	if (legacy !== null) {
+		return Number(legacy);
+	}
+
+	return fallback;
+};
+
 window.addEventListener("load", () => {
 	const audios = document.querySelectorAll("audio");
 
 	if (audios.length === 0) return;
 
-	const volumenGuardado = localStorage.getItem("volumenAudio");
-	const volumen = volumenGuardado !== null ? Number(volumenGuardado) : 0.5;
+	const volumenGeneral = getStoredVolume("volumenGeneral", 0.5);
+	const volumenMusica = getStoredVolume("volumenMusica", 0.5);
 
 	audios.forEach((audio) => {
-		audio.volume = volumen;
+		audio.volume = volumenGeneral * volumenMusica;
 	});
 
 	const reproducir = () => {
@@ -40,24 +54,37 @@ window.addEventListener("load", () => {
 	}
 });
 
-const slider = document.getElementById("volumenControl");
+const sliderGeneral = document.getElementById("volumenGeneral");
+const sliderMusica = document.getElementById("volumenMusica");
+const sliderEfectos = document.getElementById("volumenEfectos");
 
-if (slider) {
-	const volumenGuardado = localStorage.getItem("volumenAudio");
-	slider.value = volumenGuardado !== null ? volumenGuardado : 0.5;
+if (sliderGeneral && sliderMusica && sliderEfectos) {
+	sliderGeneral.value = getStoredVolume("volumenGeneral", 0.5);
+	sliderMusica.value = getStoredVolume("volumenMusica", 0.5);
+	sliderEfectos.value = getStoredVolume("volumenEfectos", 0.5);
 
 	const audios = document.querySelectorAll("audio");
-	audios.forEach((audio) => {
-		audio.volume = Number(slider.value);
+	const aplicarVolumenMusica = () => {
+		const general = Number(sliderGeneral.value);
+		const musica = Number(sliderMusica.value);
+		audios.forEach((audio) => {
+			audio.volume = general * musica;
+		});
+	};
+
+	aplicarVolumenMusica();
+
+	sliderGeneral.addEventListener("input", () => {
+		localStorage.setItem("volumenGeneral", String(Number(sliderGeneral.value)));
+		aplicarVolumenMusica();
 	});
 
-	slider.addEventListener("input", () => {
-		const nuevoVolumen = Number(slider.value);
+	sliderMusica.addEventListener("input", () => {
+		localStorage.setItem("volumenMusica", String(Number(sliderMusica.value)));
+		aplicarVolumenMusica();
+	});
 
-		localStorage.setItem("volumenAudio", String(nuevoVolumen));
-
-		audios.forEach((audio) => {
-			audio.volume = nuevoVolumen;
-		});
+	sliderEfectos.addEventListener("input", () => {
+		localStorage.setItem("volumenEfectos", String(Number(sliderEfectos.value)));
 	});
 }

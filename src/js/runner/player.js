@@ -8,7 +8,7 @@ export const player = (() => {
 
   class Player {
     constructor(params) {
-      this.position_ = new THREE.Vector3(0, 0, 0);
+      this.position_ = new THREE.Vector3(0, 0, 2); // Posición inicial del jugador
       this.velocity_ = 0.0;
       this.hit_ = false;
       this.invulnerableTime_ = 0.0;

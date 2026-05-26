@@ -130,6 +130,7 @@ export const world = (() => {
       obj.quaternion.setFromAxisAngle(
           new THREE.Vector3(0, 1, 0), Math.random() * Math.PI * 2.0);
       obj.position.x = START_POS + offset;
+      obj.position.z = 2;
       obj.scale = scale;
       this.objects_.push(obj);
     }

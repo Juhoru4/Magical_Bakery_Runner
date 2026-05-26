@@ -3,6 +3,9 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.124/build/three.mod
 import {player} from './player.js';
 import {world} from './world.js';
 
+import {MTLLoader} from 'https://cdn.jsdelivr.net/npm/three@0.124/examples/jsm/loaders/MTLLoader.js';
+import {OBJLoader} from 'https://cdn.jsdelivr.net/npm/three@0.124/examples/jsm/loaders/OBJLoader.js';
+
 
 
 const _VS = `
@@ -204,21 +207,53 @@ class BasicWorldDemo {
     light.shadow.camera.bottom = -50;
     this.scene_.add(light);
 
-    light = new THREE.HemisphereLight(0x202020, 0x004080, 0.6);
+    light = new THREE.HemisphereLight(0xF7EFDA, 0x27100B, 0.6);
     this.scene_.add(light);
 
     this.scene_.background = new THREE.Color(0x808080);
     this.scene_.fog = new THREE.FogExp2(0x89b2eb, 0.00125);
 
-    const ground = new THREE.Mesh(
-        new THREE.PlaneGeometry(20000, 20000, 10, 10),
-        new THREE.MeshStandardMaterial({
-            color: 0xf6f47f,
-          }));
-    ground.castShadow = false;
-    ground.receiveShadow = true;
-    ground.rotation.x = -Math.PI / 2;
-    this.scene_.add(ground);
+    // Load world model
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath('../src/models/world/');
+    mtlLoader.load('SceneBakery.mtl', (materials) => {
+      materials.preload();
+
+      const loader = new OBJLoader();
+      loader.setMaterials(materials);
+      loader.setPath('../src/models/world/');
+      loader.load('SceneBakery.obj', (obj) => {
+        obj.scale.setScalar(315);
+        obj.position.y = 5.35;
+        obj.position.z = 0.7;
+        obj.position.x = -0.5;
+        
+        obj.traverse(c => {
+          if (c.geometry) {
+            c.geometry.computeBoundingBox();
+          }
+
+          let materialsList = c.material;
+          if (!(c.material instanceof Array)) {
+            materialsList = [c.material];
+          }
+
+          for (let m of materialsList) {
+            if (m) {
+              m.specular = new THREE.Color(0x000000);
+            }
+          }
+          c.castShadow = true;
+          c.receiveShadow = true;
+        });
+
+        this.scene_.add(obj);
+        
+        // Debug info
+        const bbox = new THREE.Box3().setFromObject(obj);
+        console.log('SceneBakery loaded - Bounding box:', bbox);
+      });
+    });
 
     const uniforms = {
       topColor: { value: new THREE.Color(0x0077FF) },
@@ -299,7 +334,7 @@ class BasicWorldDemo {
     if (this.player_.hit_) {
       this.player_.hit_ = false;
       const currentLives = Number.isFinite(this.lives_) ? this.lives_ : 3;
-      this.lives_ = Math.max(0, currentLives - 1);
+      this.lives_ = Math.max(0, currentLives - 0); //Vidass aqui+++
       this._UpdateLivesUI_();
 
       if (this.lives_ === 0) {

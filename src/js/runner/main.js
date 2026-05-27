@@ -192,8 +192,8 @@ class BasicWorldDemo {
 
     this.scene_ = new THREE.Scene();
 
-    let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
-    light.position.set(60, 100, 10);
+    let light = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+    light.position.set(50, 40, 80);
     light.target.position.set(40, 0, 0);
     light.castShadow = true;
     light.shadow.bias = -0.001;
@@ -207,7 +207,7 @@ class BasicWorldDemo {
     light.shadow.camera.bottom = -50;
     this.scene_.add(light);
 
-    light = new THREE.HemisphereLight(0xF7EFDA, 0x27100B, 0.6);
+    light = new THREE.HemisphereLight(0xF7EFDA, 0x27100B, 1.2);
     this.scene_.add(light);
 
     this.scene_.background = new THREE.Color(0x808080);
@@ -241,6 +241,12 @@ class BasicWorldDemo {
           for (let m of materialsList) {
             if (m) {
               m.specular = new THREE.Color(0x000000);
+              if (m.roughness !== undefined) {
+                m.roughness = 0.7;
+              }
+              if (m.metalness !== undefined) {
+                m.metalness = 0.1;
+              }
             }
           }
           c.castShadow = true;
@@ -288,6 +294,8 @@ class BasicWorldDemo {
       livesElement.innerText = lives.toString();
     }
   }
+
+
 
   _TriggerGameOver_() {
     if (this.gameOverTriggered_) {

@@ -60,6 +60,12 @@ export const world = (() => {
             for (let m of materials) {
               if (m) {
                 m.specular = new THREE.Color(0x000000);
+                if (m.roughness !== undefined) {
+                  m.roughness = 0.7;
+                }
+                if (m.metalness !== undefined) {
+                  m.metalness = 0.1;
+                }
               }
             }
             c.castShadow = true;

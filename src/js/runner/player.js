@@ -12,6 +12,8 @@ export const player = (() => {
       this.velocity_ = 0.0;
       this.hit_ = false;
       this.invulnerableTime_ = 0.0;
+      this.lift_ = 0.0;
+      this.rotationY_ = 0.0;
       this.jumpAudio_ = new Audio('../src/sounds/salto.mp3');
       this.jumpAudio_.preload = 'auto';
 
@@ -59,25 +61,25 @@ export const player = (() => {
     LoadModel_() {
       const characterOptions = {
         char1: {
-          modelPath: '../src/models/characters/char1/Velociraptor.obj',
-          mtlPath: '../src/models/characters/char1/Velociraptor.mtl',
-          scale: 0.3,
-          rotationY: Math.PI / 2,
-          lift: 0.1,
+          modelPath: '../src/models/characters/char1/CharCake.obj',
+          mtlPath: '../src/models/characters/char1/CharCake.mtl',
+          scale: 50,
+          rotationY: 0,
+          lift: 1,
         },
         char2: {
-          modelPath: '../src/models/characters/char2/Apatosaurus.obj',
-          mtlPath: '../src/models/characters/char2/Apatosaurus.mtl',
-          scale: 0.22,
-          rotationY: Math.PI / 2,
-          lift: 0.0,
+          modelPath: '../src/models/characters/char2/CharCupcake.obj',
+          mtlPath: '../src/models/characters/char2/CharCupcake.mtl',
+          scale: 55,
+          rotationY: 0,
+          lift: 1,
         },
         char3: {
-          modelPath: '../src/models/characters/char3/Parasaurolophus.obj',
-          mtlPath: '../src/models/characters/char3/Parasaurolophus.mtl',
-          scale: 0.24,
-          rotationY: Math.PI / 2,
-          lift: 0.0,
+          modelPath: '../src/models/characters/char3/CharDonut.obj',
+          mtlPath: '../src/models/characters/char3/CharDonut.mtl',
+          scale: 50,
+          rotationY: 0,
+          lift: 1,
         },
       };
 
@@ -97,7 +99,9 @@ export const player = (() => {
           obj.scale.setScalar(config.scale);
           obj.rotation.y = config.rotationY;
           obj.position.y = config.lift;
-
+          
+          this.lift_ = config.lift;
+          this.rotationY_ = config.rotationY;
           this.mesh_ = obj;
           this.params_.scene.add(this.mesh_);
 
@@ -187,6 +191,7 @@ export const player = (() => {
 
       if (this.mesh_) {
         this.mesh_.position.copy(this.position_);
+        this.mesh_.position.y += this.lift_;
         this.CheckCollisions_();
       }
     }

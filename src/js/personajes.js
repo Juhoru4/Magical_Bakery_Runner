@@ -8,36 +8,36 @@ const characters = [
     id: "char1",
     name: "Laby",
     color: "#f17c9b",
-    modelPath: "../src/models/characters/char1/Velociraptor.obj",
-    mtlPath: "../src/models/characters/char1/Velociraptor.mtl",
-    scale: 0.32,
-    rotationY: Math.PI / 2,
+    modelPath: "../src/models/characters/char1/CharCake.obj",
+    mtlPath: "../src/models/characters/char1/CharCake.mtl",
+    scale: 2,
+    rotationY: 0,
     spinSpeed: 0.7,
-    lift: 0.1,
+    lift: 0,
   },
 
   {
     id: "char2",
     name: "Rose",
     color: "#ffca53",
-    modelPath: "../src/models/characters/char2/Apatosaurus.obj",
-    mtlPath: "../src/models/characters/char2/Apatosaurus.mtl",
-    scale: 0.22,
-    rotationY: Math.PI / 2,
+    modelPath: "../src/models/characters/char2/CharCupcake.obj",
+    mtlPath: "../src/models/characters/char2/CharCupcake.mtl",
+    scale: 2,
+    rotationY: 0,
     spinSpeed: 0.7,
-    lift: 0.0,
+    lift: 0,
   },
 
   {
     id: "char3",
     name: "Aisha",
     color: "#9400d3",
-    modelPath: "../src/models/characters/char3/Parasaurolophus.obj",
-    mtlPath: "../src/models/characters/char3/Parasaurolophus.mtl",
-    scale: 0.24,
-    rotationY: Math.PI / 2,
+    modelPath: "../src/models/characters/char3/CharDonut.obj",
+    mtlPath: "../src/models/characters/char3/CharDonut.mtl",
+    scale: 2,
+    rotationY: 0,
     spinSpeed: 0.7,
-    lift: 0.0,
+    lift: 0,
   }
 
 ];
@@ -127,14 +127,14 @@ function createCharacterViewer(container, character) {
   renderer.outputEncoding = THREE.sRGBEncoding;
   container.appendChild(renderer.domElement);
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
 
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.5);
   keyLight.position.set(2, 4, 3);
   scene.add(keyLight);
 
-  const fillLight = new THREE.DirectionalLight(0xffe2f0, 0.8);
+  const fillLight = new THREE.DirectionalLight(0xF7EFDA, 0.5);
   fillLight.position.set(-2, 1, 2);
   scene.add(fillLight);
 

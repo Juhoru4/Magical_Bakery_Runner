@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url(https://db.onlinewebfonts.com/c/39a2c7f346d5cfae7045aeb2fb50d9ad?family=Lulo+Clean+W01+One+Bold);
 
 
 body {
   width: 100%;
   height: 100%;
   position: absolute;
-  background: #000000;
+  background: var(--color-blue);
   margin: 0;
   padding: 0;
   overscroll-behavior: none;
@@ -23,14 +23,16 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Lulo Clean W01 One Bold";
 }
 
 .score-text {
-  font-size: 3em;
+  font-size: 2em;
   color: white;
-  padding: 2em;
-  text-shadow: 5px 5px black;
+  padding: 0.8em 1.2em;
+  text-shadow: 2px 2px black;
+  background-color: rgba(37, 16, 9, 0.5);
+  border-radius: 100px;
 }
 
 .hud-layout {
@@ -54,19 +56,24 @@ body {
   justify-content: center;
   align-items: flex-start;
   pointer-events: none;
+  margin-top: 60px;
 }
 
 .lives-layout {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   margin-left: auto;
   gap: 4px;
   color: #fff;
-  text-shadow: 5px 5px black;
-  font-family: 'Press Start 2P', cursive;
+  text-shadow: 2px 2px black;
+  font-family: "Lulo Clean W01 One Bold";
   pointer-events: none;
+  background-color: rgba(37, 16, 9, 0.25);
+  padding: 0.8em 1.2em;
+  border-radius: 30px;
+  margin-top: 20px;
 }
 
 .lives-label {
@@ -82,29 +89,26 @@ body {
   top: 16px;
   left: 16px;
   z-index: 30;
-  appearance: none;
-  border: 0;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #000;
-  padding: 10px 14px;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  width: 50px;
+  height: 50px;
+  background-image: url('../img/stop.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
 }
 
 #pausar:hover {
-  background: #ffffff;
+  background-color: var(--color-darkBrown);
 }
 
 .pause-body {
-  background: #ffffff;
+  background: var(--color-blue);
   position: static;
 }
 
 .game-over-body {
-  background: #ffffff;
+  background: var(--color-blue);
   position: static;
 }
 
@@ -146,18 +150,106 @@ body {
   height: 100%;
   min-height: 100vh;
   padding: 24px;
-  background: #ffffff;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--color-blue);
+  font-family: 'Nexa W01 Heavy', sans-serif;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .pause-page #cerrar_pausa {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  background-image: url('../img/x.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+}
+
+.pause-page h2 {
+  color: var(--color-white);
+}
+
+.pause-page p {
+  color: var(--color-white);
+}
+
+.pause-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pause-buttons a {
+  margin-left: 0;
+}
+
+.pause-page .settings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.pause-page .settings h3 {
+  color: var(--color-white);
+  margin: 0;
+}
+
+.pause-page .settings input[type="range"] {
+  width: 300px;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--color-brown);
+  border: 2px solid var(--color-darkerBrown);
+  outline: none;
+  -webkit-appearance: none;
   appearance: none;
-  border: 0;
-  background: #000;
-  color: #fff;
-  padding: 10px 14px;
+}
+
+.pause-page .settings input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-red);
   cursor: pointer;
-  margin-bottom: 16px;
+  border: 2px solid var(--color-darkerBrown);
+  transition: 0.2s ease;
+}
+
+.pause-page .settings input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--color-darkBrown);
+}
+
+.pause-page .settings input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-brown);
+  cursor: pointer;
+  border: 2px solid var(--color-darkerBrown);
+  transition: 0.2s ease;
+}
+
+.pause-page .settings input[type="range"]::-moz-range-thumb:hover {
+  background: var(--color-darkBrown);
+}
+
+.pause-page .settings input[type="range"]::-moz-range-track {
+  background: transparent;
+  border: none;
 }
 
 .game-over-page {
@@ -166,8 +258,8 @@ body {
   height: 100%;
   min-height: 100vh;
   padding: 24px;
-  background: #ffffff;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--color-blue);
+  font-family: 'Nexa W01 Heavy', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,11 +269,24 @@ body {
 
 .game-over-page h2 {
   margin: 0 0 12px;
-  font-size: 2.2rem;
-  color: #111;
+  font-size: 4.2rem;
+  color: var(--color-red);
+  -webkit-text-stroke: 1px var(--color-white);
 }
 
 .game-over-page p {
-  margin: 0;
-  color: #444;
+  margin: 0 0 20px;
+  color: var(--color-white);
+}
+
+.game-over-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-buttons a {
+  margin-left: 0;
 }

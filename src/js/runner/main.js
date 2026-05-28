@@ -342,7 +342,7 @@ class BasicWorldDemo {
     if (this.player_.hit_) {
       this.player_.hit_ = false;
       const currentLives = Number.isFinite(this.lives_) ? this.lives_ : 3;
-      this.lives_ = Math.max(0, currentLives - 0); //Vidass aqui+++
+      this.lives_ = Math.max(0, currentLives - 1); //Vidass aqui+++
       this._UpdateLivesUI_();
 
       if (this.lives_ === 0) {

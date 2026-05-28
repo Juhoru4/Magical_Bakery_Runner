@@ -1,15 +1,65 @@
+@import url(https://db.onlinewebfonts.com/c/160f151bb5c24f63117344faa604d58b?family=Nexa+W01+Heavy);
+
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    background-color: var(--color-blue);
+    font-family: 'Nexa W01 Heavy', sans-serif;
+}
+
+a {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--color-brown);
+    color: var(--color-white);
+    border: 3px solid var(--color-darkerBrown);
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+a:hover {
+    background-color: var(--color-darkBrown);
+    transform: scale(1.05);
+}
+
+#pausar,
+#cerrar_pausa {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--color-brown);
+    color: var(--color-white);
+    border: 3px solid var(--color-darkerBrown);
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-weight: 600;
+    appearance: none;
+    font-size: 0;
+}
+
+#pausar:hover,
+#cerrar_pausa:hover {
+    background-color: var(--color-darkBrown);
+    transform: scale(1.05);
+}
+
 :root {
-    --color-primary: #445060;
-    --color-darker: #26110d;
-    --color-lighter: #fefae5;
-    --color-black: #0D0705;
-    --color-grey: #e3dadb;
+    --color-blue: #444F5F;
+    --color-brown: #C39363;
+    --color-darkBrown: #8F4E30;
+    --color-darkerBrown: #251009;
+    --color-red: #CA2C28;
+    --color-white: #FCF8E3;
+    --color-yellow: #D8AF70;
 }
 
 

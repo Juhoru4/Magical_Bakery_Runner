@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url(https://db.onlinewebfonts.com/c/160f151bb5c24f63117344faa604d58b?family=Nexa+W01+Heavy);
+
 
 body{
   margin:0;
   padding:2em 0 10em;
-  background:#f4f7ff;
-  font-family:'Roboto', sans-serif;
+  background:var(--color-blue);
   color:white;
 }
 
@@ -109,7 +108,7 @@ body{
   margin-top:2.5em;
   margin-bottom:0;
 
-  font-family:'Bangers', cursive;
+  font-family: 'Nexa W01 Heavy', sans-serif;
   letter-spacing:1px;
 }
 

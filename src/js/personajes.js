@@ -6,8 +6,8 @@ const characters = [
 
   {
     id: "char1",
-    name: "Laby",
-    color: "#f17c9b",
+    name: "Cake",
+    color: "#CA2C28",
     modelPath: "../src/models/characters/char1/CharCake.obj",
     mtlPath: "../src/models/characters/char1/CharCake.mtl",
     scale: 2,
@@ -18,8 +18,8 @@ const characters = [
 
   {
     id: "char2",
-    name: "Rose",
-    color: "#ffca53",
+    name: "Cupcake",
+    color: "#D8AF70",
     modelPath: "../src/models/characters/char2/CharCupcake.obj",
     mtlPath: "../src/models/characters/char2/CharCupcake.mtl",
     scale: 2,
@@ -30,8 +30,8 @@ const characters = [
 
   {
     id: "char3",
-    name: "Aisha",
-    color: "#9400d3",
+    name: "Donut",
+    color: "#251009",
     modelPath: "../src/models/characters/char3/CharDonut.obj",
     mtlPath: "../src/models/characters/char3/CharDonut.mtl",
     scale: 2,

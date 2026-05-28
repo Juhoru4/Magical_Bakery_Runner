@@ -17,7 +17,7 @@ export const world = (() => {
       this.position = new THREE.Vector3();
       this.quaternion = new THREE.Quaternion();
       this.scale = 1.0;
-      this.baseScale_ = 1.0;
+      this.baseScale_ = 30;
       this.modelOffsetY_ = 0.0;
       this.colliderScale_ = 0.7;
       this.collider = new THREE.Box3();
@@ -31,13 +31,13 @@ export const world = (() => {
     LoadModel_() {
       const mtlLoader = new MTLLoader();
       mtlLoader.setPath('../src/models/obstacles/');
-      mtlLoader.load('Cactus3.mtl', (materials) => {
+      mtlLoader.load('ObsFork.mtl', (materials) => {
         materials.preload();
 
         const loader = new OBJLoader();
         loader.setMaterials(materials);
         loader.setPath('../src/models/obstacles/');
-        loader.load('Cactus3.obj', (obj) => {
+        loader.load('ObsFork.obj', (obj) => {
           obj.scale.setScalar(1.0);
 
           obj.updateWorldMatrix(true, true);
@@ -136,6 +136,7 @@ export const world = (() => {
       obj.quaternion.setFromAxisAngle(
           new THREE.Vector3(0, 1, 0), Math.random() * Math.PI * 2.0);
       obj.position.x = START_POS + offset;
+      obj.position.y = 0.5 * scale;
       obj.position.z = 2;
       obj.scale = scale;
       this.objects_.push(obj);
